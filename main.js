@@ -1,5 +1,5 @@
 const content = document.querySelector('.pokeList');
-const searchName = document.querySelector('#searchBox'); 
+const searchText = document.querySelector('#searchBox').value; 
 
 let pokeData = []
 
@@ -16,6 +16,8 @@ async function fetchData() {await
                     name: data.name,
                     img: data.sprites.other['official-artwork'].front_default,
                     types: data.types,
+                    weight: data.weight,
+                    height: data.height,
                 };
             });
         });
@@ -23,7 +25,6 @@ async function fetchData() {await
     .then(res => {
         pokeData = res;
         pokeCards();
-        console.log(pokeData);
     });
     });
 };
@@ -39,6 +40,10 @@ function pokeCards(){
         <div class="pokeTypes">
         ${pokemon.types.map((type) => getType(type)).join('')}
         </div>
+        <div class=pokeDimensions>
+        <p>weight: ${pokemon.weight}</p>
+        <p>height: ${pokemon.height}</p>
+        </div>
         <div class="pokeRank">#${pokemon.id}</div>
         </div>`
     })
@@ -52,4 +57,3 @@ function getType(type) {
 }
 
 fetchData(); 
-searchName.addEventListener('input',searchCards);
