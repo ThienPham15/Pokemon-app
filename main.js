@@ -1,5 +1,11 @@
 const content = document.querySelector('.pokeList');
 const searchText = document.querySelector('#searchBox').value; 
+const genBtn = document.querySelectorAll('.genBtn'); 
+
+genBtn.forEach((el,i) =>{
+    console.log(genBtn)
+    el.addEventListener('click', () => fetchGeneration(i+1))
+})
 
 let pokeData = []
 
@@ -116,5 +122,7 @@ function getType(type) {
     return `<p>${type.type.name}</p>`
 }
 
-// fetchData();  
-fetchGeneration(5);
+/* // fetchData();  
+fetchGeneration(5); */
+
+
