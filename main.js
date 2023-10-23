@@ -1,15 +1,13 @@
 const content = document.querySelector('.pokeList');
 const searchText = document.querySelector('#searchBox').value; 
 const genBtn = document.querySelectorAll('.genBtn'); 
-
-genBtn.forEach((el,i) =>{
-    console.log(genBtn)
-    el.addEventListener('click', () => fetchGeneration(i+1))
-})
+const pokeNum = document.querySelector('#pokeNum');
+const searchBox = document.querySelector('#searchBox');
+const toTopBtn = document.querySelector(".toTopContainer");
 
 let pokeData = []
 
-async function fetchData() {await
+/* async function fetchData() {await
     fetch('https://pokeapi.co/api/v2/pokemon?limit=121&offset=0')
     .then(res => res.json()) //res as a variable named as res, could be respond
     .then(data => {
@@ -34,32 +32,18 @@ async function fetchData() {await
     });
     });
 };
-
-/* function fetchData1(pokeName) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`)
-    .then(res => res.json()) //res as a variable named as res, could be respond
-    .then(data => {
-        console.log(pokeName);
-            // console.log(data)
-/*             return {
-                id: data.id,
-                name: data.name,
-                img: data.sprites.other['official-artwork'].front_default,
-                types: data.types,
-                weight: data.weight,
-                height: data.height,
-                }; */
-    /* pokeCards(); */
-
+ */
 
 /* Fetching data of Poke generation */
-async function fetchGeneration(genNumber) {
-
-    await fetch(`https://pokeapi.co/api/v2/generation/${genNumber}/`)
+async function fetchGeneration(genNumber) {await 
+    fetch(`https://pokeapi.co/api/v2/generation/${genNumber}/`)
     .then(res => res.json())
     .then((data) => {
         const fetches = data.pokemon_species.map(specie => {
+            //show number of pokemon in each generation 
+            pokeNum.textContent = `There are ${data.pokemon_species.length} species in group ${IntToRoman(genNumber)}`;
             return fetch(`https://pokeapi.co/api/v2/pokemon/${specie.name}/`)
+
             .then(response => {
                   if (response.ok) {
                     return response.json()
@@ -87,15 +71,16 @@ async function fetchGeneration(genNumber) {
     Promise.all(fetches) //using when there is multiple fetches, fetch everything in order
     .then(res => {
         pokeData = res;
-        pokeCards();
+        pokeCards(pokeData);
+
     });
     });
 };
 
 /*A function adds things to html page*/
-function pokeCards(){
+function pokeCards(data){
     //map is a method to loop through each element in array and do sth(by function) with each element
-    const cards = pokeData.map(pokemon => {
+    const cards = data.map(pokemon => {
         if (pokemon.types != undefined) {
             // console.log(pokemon.types);
             return `<div class="pokeBox">
@@ -112,17 +97,80 @@ function pokeCards(){
             </div>`
         }
     })
-    
     content.innerHTML = cards 
-    
+    searchBox.classList.add('show');
+
 }
     
-
 function getType(type) {
     return `<p>${type.type.name}</p>`
 }
 
-/* // fetchData();  
-fetchGeneration(5); */
+function searchPoke(input, array) {
+    pokeList = []; //an array of pokemons contains search alphabet
+    if (input.length <= 0) {
+        pokeCards(pokeData)
+    } else {
+        const defined_pokemons = array.filter((pokemon) => pokemon != undefined && pokemon.name != undefined);
+        filterPoke = defined_pokemons.filter((pokemon) => pokemon.name.includes(input));
+        pokeCards(filterPoke);
+    }   
+};
+
+function IntToRoman(int) {
+    switch(int) {
+        case 1:
+            return 'I';
+            break; 
+        case 2:
+            return 'II';
+            break; 
+        case 3:
+            return 'III';
+            break; 
+        case 4:
+            return 'IV';
+            break; 
+        case 5:
+            return 'V';
+            break; 
+        case 6:
+            return 'VI';
+            break; 
+        case 7:
+            return 'VII';
+            break; 
+        case 8:
+            return 'VIII';
+            break; 
+        case 9:
+            return 'IX';
+            break; 
+    }
+}
+
+genBtn.forEach((el,i) =>{
+    console.log(genBtn)
+    el.addEventListener('click', () => fetchGeneration(i+1))
+});
+
+searchBox.addEventListener('input', () => searchPoke(searchBox.value, pokeData));
 
 
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+    toTopBtn.style.display = "block";
+  } else {
+    toTopBtn.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.documentElement.scrollTop = 0;
+}
+
+toTopBtn.addEventListener('click', topFunction);

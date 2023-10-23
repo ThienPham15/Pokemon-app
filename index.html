@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <title>Pokemon</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Pokemon</h1>
+    <h1><img src="https://static.wikia.nocookie.net/animal-jam-clans-1/images/d/d4/Pokemon_animated.gif/revision/latest?cb=20180513020054"></a></h1>
     <div class="filterBtn">
-        <button class="genBtn" value="1">Gen I</button>
-        <button class="genBtn" value="2">Gen II</button>
-        <button class="genBtn" value="3">Gen III</button>
-        <button class="genBtn" value="4">Gen IV</button>
-        <button class="genBtn" value="5">Gen V</button>
-        <button class="genBtn" value="6">Gen VI</button>
-        <button class="genBtn" value="7">Gen VII</button>
-        <button class="genBtn" value="8">Gen VIII</button>
-        <button class="genBtn" value="9">Gen IX</button>
+        <button class="genBtn">Gen I</button>
+        <button class="genBtn">Gen II</button>
+        <button class="genBtn">Gen III</button>
+        <button class="genBtn">Gen IV</button>
+        <button class="genBtn">Gen V</button>
+        <button class="genBtn">Gen VI</button>
+        <button class="genBtn">Gen VII</button>
+        <button class="genBtn">Gen VIII</button>
+        <button class="genBtn">Gen IX</button>
     </div>
-    <input id="searchBox" type="text">
+    <div id="pokeNum" class="pokeNum"></div>
+    <input id="searchBox" type="text" placeholder="Search by name ...">
     <div class="pokeList"></div>
+    <div class="toTopContainer">
+        <label for="toTopBtn"><span class="material-symbols-outlined toTopIcon">arrow_upward</span></label>
+        <button id="toTopBtn"></button>
+    </div>
+
     <script src="main.js"></script>
 </body>
-</html>
+</html>s
