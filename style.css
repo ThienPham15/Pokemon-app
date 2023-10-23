@@ -19,11 +19,11 @@ body {
 }
 
 h1 {
+    font-family: "Press Start 2P";
     text-align: center;
     font-size: 4rem;
     color: rgb(255, 223, 105); 
-    margin: 0.5rem auto; 
-    scale: 1.5;
+    margin: 2rem auto 1rem; 
 }
 
 #searchBox {
